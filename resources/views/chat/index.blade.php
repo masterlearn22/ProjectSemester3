@@ -7,15 +7,22 @@
         <!-- Daftar semua pesan chat -->
         <ul class="list-group flex-grow-1 overflow-auto mb-3">
             @foreach($chats as $chat)
-                <li class="list-group-item">
-                    <strong>{{ $chat->user->name }}:</strong> {{ $chat->message }}
-                    @if($chat->user_id == auth()->id())
-                        <a href="{{ route('chats.edit', $chat) }}" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="{{ route('chats.destroy', $chat) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                        </form>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <!-- Teks chat -->
+                    <div>
+                        <strong>{{ $chat->user->name }}:</strong> {{ $chat->message }}
+                    </div>
+
+                    <!-- Tombol Edit dan Hapus, jika user adalah pengirim pesan -->
+                    @if($chat->ID_USER == Auth::user()->ID_USER)
+                        <div class="btn-group">
+                            <a href="{{ route('chats.edit', $chat) }}" class="btn btn-sm btn-light">Edit</a>
+                            <form action="{{ route('chats.destroy', $chat) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-dark">Delete</button>
+                            </form>
+                        </div>
                     @endif
                 </li>
             @endforeach
@@ -71,6 +78,19 @@
         /* Jarak antara textarea dan tombol */
         .mr-2 {
             margin-right: 10px;
+        }
+
+        /* Atur tombol Edit dan Delete di sebelah kanan */
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Sesuaikan tampilan jika diperlukan */
+        .btn-group {
+            display: flex;
+            gap: 5px; /* Jarak antar tombol */
         }
     </style>
 @endsection

@@ -31,4 +31,9 @@ class Menu extends Model
     {
         return $this->hasMany(SETTING_MENU_USER::class, 'MENU_ID', 'MENU_ID');
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(JenisUser::class, 'SETTING_MENU_USER', 'MENU_ID', 'ID_JENIS_USER');
+    }
 }

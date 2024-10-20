@@ -26286,4 +26286,44 @@ dl li {
   -webkit-flex-grow: 1;
   flex-grow: 1;
 }
+
+.zoomable-image {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.modal-container {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-container img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.username {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  padding-left: 12px;
+}
+
+.post-text {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+.timestamp {
+  font-family: 'Arial', sans-serif;
+  font-size: 12px;
+  color: #666;
+}
 /*# sourceMappingURL=maps/style.css.map */

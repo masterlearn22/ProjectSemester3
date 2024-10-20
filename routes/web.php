@@ -77,8 +77,9 @@ Route::get('/register', [AuthController::class, 'TampilanRegistrasi']);
 Route::post('/simpanlogin', [AuthController::class, 'login']);
 Route::get('/login', [AuthController::class, 'Tampilanlogin']);
 Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/profile', [ProfileController::class,'index'])->name('profile.index');
 Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::post('/profile/edit', [ProfileController::class, 'update'])->name('profile.update');
+Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
 // Route yang bisa dibuka
 Route::get('/dashboard', [MenuController::class, 'dashboard'])->name('menu.dashboard');
@@ -117,7 +118,6 @@ Route::middleware(['auth','role:3,4'])->group(function () {
     Route::post('mahasiswa/simpanmhs', [MahasiswaController::class, 'store'])->name('mahasiswa.store');
     Route::resource('kategori', KategoriController::class);
     Route::resource('jenis_user', JenisUserController::class);
-    
     Route::get('/datamhs', [MahasiswaController::class, 'datamhs'])->name('datamhs');
     Route::resource('menu', MenuController::class);
     Route::resource('aksesMenu', AksesMenuController::class);

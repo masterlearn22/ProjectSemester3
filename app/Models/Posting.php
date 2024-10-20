@@ -11,7 +11,8 @@ class Posting extends Model
     protected $primaryKey = 'posting_id';
     public $timestamps = false;
     protected $casts = [
-        'posting_id' => 'string', // Misal, jika `posting_id` adalah UUID atau string
+        'posting_id' => 'string',
+        'message_gambar' => 'array', 
     ];
     
 

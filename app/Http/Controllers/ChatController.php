@@ -11,7 +11,7 @@ class ChatController extends Controller
     // Menampilkan semua chat
     public function index()
     {
-        $chats = Chat::with('user')->latest()->get();
+        $chats = Chat::with('user')->orderBy('created_at', 'asc')->get();
         return view('chat.index', compact('chats'));
     }
 

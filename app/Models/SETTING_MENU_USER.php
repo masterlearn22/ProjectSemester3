@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SETTING_MENU_USER extends Model
 {
@@ -12,6 +13,18 @@ class SETTING_MENU_USER extends Model
     protected $table = 'SETTING_MENU_USER';
     protected $primaryKey = 'NO_SETTING';
 
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->NO_SETTING)) {
+                $model->NO_SETTING = (string) Str::uuid(); // Atur NO_SETTING sebagai UUID
+            }
+        });
+    }
+    
     public $timestamps = false;
     protected $fillable = [
         'NO_SETTING',

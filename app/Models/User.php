@@ -25,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_photo',
         'no_hp',
         'wa',
         'pin',
@@ -59,19 +60,9 @@ class User extends Authenticatable
         ];
     }
 
-    public function isAdmin()
+    public function postings()
     {
-        return $this->JENIS_USER->JENIS_USER === 'admin';
-    }
-
-    public function isMahasiswa()
-    {
-        return $this->JENIS_USER->JENIS_USER === 'mahasiswa';
-    }
-
-    public function isUser()
-    {
-        return $this->JENIS_USER->JENIS_USER === 'user';
+        return $this->hasMany(Posting::class, 'sender', 'ID_USER');
     }
 
 //     public function isAnggota()

@@ -12,20 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            // Tambahkan kolom yang diperlukan
-            $table->id('ID_USER')->primary();
+            $table->id('ID_USER');
             $table->string('name', 60);
             $table->string('username', 60);
             $table->string('password', 60);
             $table->string('email', 60);
+            $table->string('profile_photo')->nullable(); // Pindahkan ke sini
             $table->string('no_hp', 30);
             $table->string('wa', 15);
             $table->string('pin', 15);
-            $table->string('ID_JENIS_USER', 30)->nullable(); // Foreign key field
+            $table->string('ID_JENIS_USER', 30)->nullable();
             $table->string('STATUS_USER', 30)->nullable();
             $table->timestamps();
         
-            // Tambahkan foreign key setelah field-nya ada
             $table->foreign('ID_JENIS_USER')->references('ID_JENIS_USER')->on('JENIS_USER');
         });
         
@@ -52,6 +51,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('profile_photo');
+        });
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }

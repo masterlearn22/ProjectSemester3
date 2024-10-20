@@ -14,12 +14,16 @@ use Illuminate\Support\Facades\Auth;
 class MessageController extends Controller
 {
     public function index()
-{
-    $messages = Message::where('recipient_email', Auth::user()->email)->get();
+    {
+        // Ambil pesan yang diterima
+        $receivedMessages = Message::where('recipient_email', Auth::user()->email)->get();
+        
+        // Ambil pesan yang dikirim
+        $sentMessages = Message::where('sender', Auth::user()->email)->get();
+        
+        return view('messages.index', compact('receivedMessages', 'sentMessages'));
+    }
     
-    return view('messages.index', compact('messages'));
-}
-
     
 
     public function create()
@@ -43,7 +47,7 @@ class MessageController extends Controller
                 'create_by' => 'required|string',
                 'message_reference' => 'nullable|string',
                 'recipient_email' => 'required|exists:users,email', // Periksa email penerima
-                'file.*' => 'mimes:jpg,jpeg,png,pdf,doc,docx,zip|max:2048' // Batasi tipe file dan ukuran file
+                'file.*' => 'mimes:jpg,jpeg,png,pdf,doc,docx,zip' // Batasi tipe file dan ukuran file
             ]);
     
             // Buat message baru

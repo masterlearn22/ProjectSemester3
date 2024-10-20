@@ -21,21 +21,23 @@
         </div>
 
         <!-- Pratinjau Gambar Sebelumnya -->
-        <div class="form-group">
-            <label for="existing_image">Gambar Sebelumnya:</label>
-            @if($gambarPathArray)
+        <!-- Pratinjau Gambar Sebelumnya -->
+<div class="form-group">
+    <label for="existing_image">Gambar Sebelumnya:</label>
+    @if($gambarPathArray)
+        <div>
+            <!-- Loop untuk menampilkan setiap gambar -->
+            @foreach ($gambarPathArray as $index => $gambar)
                 <div>
-                    <!-- Loop untuk menampilkan setiap gambar -->
-                    @foreach ($gambarPathArray as $gambar)
-                        <div>
-                            <img src="{{ asset('storage/' . $gambar) }}" alt="Gambar Postingan" class="img-fluid" style="max-width: 20%; height: auto; margin-bottom: 10px;">
-                        </div>
-                    @endforeach
+                    <img src="{{ asset('storage/' . $gambar) }}" alt="Gambar Postingan" class="img-fluid" style="max-width: 20%; height: auto; margin-bottom: 10px;">
+                    <input type="checkbox" name="delete_gambar[]" value="{{ $gambar }}"> Hapus
                 </div>
-            @else
-                <p>Tidak ada gambar sebelumnya.</p>
-            @endif
+            @endforeach
         </div>
+    @else
+        <p>Tidak ada gambar sebelumnya.</p>
+    @endif
+</div>
 
         <!-- Upload Gambar Baru -->
         <div class="form-group">

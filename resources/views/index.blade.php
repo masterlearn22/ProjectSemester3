@@ -5,7 +5,6 @@
     @include('layout.header')
     @include('layout.styleGlobal')
     @include('layout.stylePage')
-
 </head>
 
 <body>

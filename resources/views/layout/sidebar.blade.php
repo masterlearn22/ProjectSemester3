@@ -1,24 +1,20 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         <li class="nav-item nav-profile">
-            <a href="{{ route('profile.edit') }}" class="nav-link">
+            <a href="{{ route('profile.index') }}" class="nav-link">
                 <div class="nav-profile-image">
 
-                    @if (Auth::user()->ID_JENIS_USER == 4)
-                        <img src="../assets/images/faces/photo4.jpg" alt="profile" />
-                    @elseif (Auth::user()->ID_JENIS_USER == 3)
-                        <img src="../assets/images/faces/photo3.jpg" alt="profile" />
-                    @elseif (Auth::user()->ID_JENIS_USER == 2)
-                        <img src="../assets/images/faces/photo2.jpg" alt="profile" />
-                    @elseif (Auth::user()->ID_JENIS_USER == 1)
-                        <img src="../assets/images/faces/photo1.jpg" alt="profile" />
+                    @if (Auth::user()->profile_photo)
+                        <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}" alt="profile" />
+                    @else
+                        <img src="{{ asset('assets/images/faces/default.jpg') }}"/>
                     @endif
                     <span class="login-status online"></span>
                     <!--change to offline or busy as needed-->
                 </div>
                 <div class="nav-profile-text d-flex flex-column">
                     <span class="mb-2 font-weight-bold">
-                        {{ session('name') }}
+                        {{Auth::user()->name}}
                     </span>
                     <span class="text-secondary text-small">{{ session('JENIS_USER') }}
 
@@ -55,7 +51,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('jenis_user.index') }}">
                     <span class="menu-title">Daftar Role</span>
-                    <i class="mdi mdi-home menu-icon"></i>
+                    <i class="mdi mdi mdi-firefox menu-icon"></i>
                 </a>
             </li>
         @endif
@@ -119,7 +115,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('postings.index') }}">
                     <span class="menu-title">Posting</span>
-                    <i class="mdi mdi mdi-gnome menu-icon"></i>
+                    <i class="mdi mdi mdi-folder-multiple-image menu-icon"></i>
                 </a>
             </li>
         @endif
@@ -127,7 +123,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ route('chats.index') }}">
                 <span class="menu-title">Chat Global</span>
-                <i class="mdi mdi mdi-gnome menu-icon"></i>
+                <i class="mdi mdi mdi-facebook-messenger menu-icon"></i>
             </a>
         </li>
     @endif
@@ -139,17 +135,6 @@
                 </a>
             </li>
         @endif
-        @if (isset($message))
-        <ul class="nav flex-column sub-menu">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('messages.show', ['message' => $message->message_id]) }}">
-                    <span class="menu-title">Inbox</span>
-                    <i class="mdi mdi mdi-gnome menu-icon"></i>
-                </a>
-            </li>
-        </ul>
-        @endif
-
 
         <li class="nav-item">
             <span class="nav-link">
@@ -168,7 +153,7 @@
 
                     @foreach ($allowedMenus as $menu)
         <li class="nav-item">
-            <a class="nav-link" href="{{ route($menu->MENU_LINK) }}">
+            <a class="nav-link" href="{{url($menu->MENU_LINK)}}">
                 <span class="menu-title">{{ $menu->MENU_NAME }}</span>
                 <i class="{{ $menu->MENU_ICON }} menu-icon"></i>
             </a>

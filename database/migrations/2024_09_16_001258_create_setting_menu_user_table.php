@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('SETTING_MENU_USER', function (Blueprint $table) {
-            $table->string('MENU_ID')->nullable(); // Foreign key ke tabel menu
+            $table->unsignedBigInteger('MENU_ID')->nullable();
             // Gunakan string untuk NO_SETTING sebagai primary key
             $table->string('NO_SETTING', 30)->primary();
             

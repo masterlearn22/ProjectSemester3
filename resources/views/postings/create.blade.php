@@ -10,12 +10,12 @@
             <label for="message_text">Isi Postingan:</label>
             <textarea name="message_text" class="form-control" rows="3" required></textarea>
         </div>
-
+    
         <div class="form-group">
-            <label for="file">Gambar</label>
+            <label for="message_gambar">Gambar</label>
             <input type="file" name="message_gambar[]" class="form-control" multiple>
         </div>
-
+    
         <button type="submit" class="btn btn-primary mt-2">Buat Postingan</button>
     </form>
 </div>

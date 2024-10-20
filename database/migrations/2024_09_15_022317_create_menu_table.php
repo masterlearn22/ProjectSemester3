@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('menu', function (Blueprint $table) {
-            $table->string('MENU_ID', 30)->primary();      // Primary key
+            $table->id('MENU_ID')->primary();      // Primary key
             $table->string('MENU_NAME', 300);              // Nama menu
             $table->string('MENU_LINK', 300);              // Link atau URL untuk menu
             $table->string('MENU_ICON', 300);              // Ikon untuk menu

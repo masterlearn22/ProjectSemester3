@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\JenisUser;
-use App\Models\Kategori;
-use App\Models\KoleksiBuku;
 use App\Models\Menu;
-use App\Models\SETTING_MENU_USER;
 use App\Models\User;
+use App\Models\Kategori;
+use App\Models\JenisUser;
+use App\Models\KoleksiBuku;
 use Illuminate\Http\Request;
+use App\Models\SETTING_MENU_USER;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class MenuController extends Controller
 {
@@ -33,63 +35,85 @@ class MenuController extends Controller
     }
 
     public function create()
-    {
-        return view('menu.create');
-    }
+{
+    $roles = JenisUser::all(); // Mengambil semua roles
+    $selectedRoles = []; // Tidak ada role yang dipilih saat membuat menu baru
+    $routes = collect(Route::getRoutes())->filter(function ($route) {
+        return in_array('GET', $route->methods()); // Hanya menampilkan routes dengan metode GET
+    })->map(function ($route) {
+        return $route->uri();
+    })->toArray();
+    
+    return view('menu.create', compact('roles', 'selectedRoles', 'routes'));
+}
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'MENU_ID'=>'required',
-            'MENU_NAME' => 'required',
-            'MENU_LINK' => 'required',
-            'MENU_ICON' => 'required',
+public function store(Request $request)
+{
+    $menu = Menu::create([
+        'MENU_NAME' => $request->MENU_NAME,
+        'MENU_LINK' => $request->MENU_LINK,
+        'MENU_ICON' => $request->MENU_ICON,
+        'CREATE_BY' => Auth::user()->name,
+        'CREATE_DATE' => now(),
+    ]);
+
+    // Simpan roles yang dipilih
+    $roles = $request->input('roles', []);
+    foreach ($roles as $roleId) {
+        SETTING_MENU_USER::create([
+            'NO_SETTING' => uniqid(),
+            'MENU_ID' => $menu->MENU_ID,
+            'ID_JENIS_USER' => $roleId,
         ]);
-
-        Menu::create([
-            'MENU_ID'=> $request->MENU_ID,
-            'MENU_NAME' => $request->MENU_NAME,
-            'MENU_LINK' => $request->MENU_LINK,
-            'MENU_ICON' => $request->MENU_ICON,
-            'CREATE_BY' => auth()->user()->id,
-            'CREATE_DATE' => now(),
-        ]);
-
-        return redirect()->route('menu.index')->with('success', 'Menu berhasil ditambahkan.');
     }
+    
+
+    return redirect()->route('menu.index')->with('success', 'Menu berhasil ditambahkan.');
+}
+
 
     public function edit($id)
     {
         $menu = Menu::findOrFail($id);
-        return view('menu.edit', compact('menu'));
+        $roles = JenisUser::all(); // Mengambil semua roles
+        $selectedRoles = $menu->roles->pluck('ID_JENIS_USER')->toArray(); // Role yang saat ini terkait dengan menu
+    
+        return view('menu.edit', compact('menu', 'roles', 'selectedRoles'));
     }
+    
 
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'MENU_NAME' => 'required',
-            'MENU_LINK' => 'required',
-            'MENU_ICON' => 'required',
-        ]);
+{
+    $menu = Menu::findOrFail($id);
+    
+    // Simpan menu
+    $menu->update($request->all());
 
-        $menu = Menu::findOrFail($id);
-        $menu->update([
-            'MENU_NAME' => $request->MENU_NAME,
-            'MENU_LINK' => $request->MENU_LINK,
-            'MENU_ICON' => $request->MENU_ICON,
-            'UPDATE_BY' => auth()->user()->id,
-            'UPDATE_DATE' => now(),
-        ]);
+    // Update roles yang terkait dengan menu
+    $roles = $request->input('roles', []);
 
-        return redirect()->route('menu.index')->with('success', 'Menu berhasil diupdate.');
+    // Hapus roles yang lama
+    SETTING_MENU_USER::where('MENU_ID', $menu->MENU_ID)->delete();
+
+    // Masukkan roles baru dengan NO_SETTING yang di-generate
+    foreach ($roles as $roleId) {
+        SETTING_MENU_USER::create([
+            'NO_SETTING' => uniqid(20), // Buat NO_SETTING unik (atau gunakan mekanisme lain)
+            'ID_JENIS_USER' => $roleId,
+            'MENU_ID' => $menu->MENU_ID,
+        ]);
     }
+
+    return redirect()->route('menu.index')->with('success', 'Menu updated successfully.');
+}
+
 
     public function destroy($id)
     {
         $menu = Menu::findOrFail($id);
         $menu->update([
             'DELETE_MARK' => 'Y',
-            'UPDATE_BY' => auth()->user()->id,
+            'UPDATE_BY' => Auth::user()->ID_USER,
             'UPDATE_DATE' => now(),
         ]);
 
