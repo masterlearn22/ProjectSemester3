@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {       
             $table->id('ID_USER');
             $table->string('name', 60);
             $table->string('username', 60);
             $table->string('password', 60);
             $table->string('email', 60);
-            $table->string('profile_photo')->nullable(); // Pindahkan ke sini
+            $table->longText('profile_photo')->nullable(); // Pindahkan ke sini
             $table->string('no_hp', 30);
             $table->string('wa', 15);
             $table->string('pin', 15);
@@ -28,7 +28,6 @@ return new class extends Migration
             $table->foreign('ID_JENIS_USER')->references('ID_JENIS_USER')->on('JENIS_USER');
         });
         
-
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
@@ -45,9 +44,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('users');

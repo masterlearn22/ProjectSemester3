@@ -7,35 +7,25 @@
                     @if (Auth::user()->profile_photo)
                         <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}" alt="profile" />
                     @else
-                        <img src="{{ asset('assets/images/faces/default.jpg') }}"/>
+                        <img src="{{ asset('assets/images/faces/default.jpg') }}" />
                     @endif
                     <span class="login-status online"></span>
                     <!--change to offline or busy as needed-->
                 </div>
                 <div class="nav-profile-text d-flex flex-column">
                     <span class="mb-2 font-weight-bold">
-                        {{Auth::user()->name}}
+                        {{ Auth::user()->name }}
                     </span>
-                    <span class="text-secondary text-small">{{ session('JENIS_USER') }}
-
+                    <span class="text-secondary text-small">
+                        {{ Auth::user()->jenisUser->JENIS_USER }}
                     </span>
-
                 </div>
-                <i class="mdi mdi mdi-minecraft nav-profile-badge"></i>
+                <i class="mdi mdi-minecraft nav-profile-badge"></i>
             </a>
         </li>
-
         <li class="nav-item ">
             <span class="nav-link">
-                @if (Auth::user()->ID_JENIS_USER == 4)
-                    <h6 class="menu-title">Menu Kapten</h6>
-                @elseif (Auth::user()->ID_JENIS_USER == 3)
-                    <h6 class="menu-title">Menu Admin</h6>
-                @elseif (Auth::user()->ID_JENIS_USER == 2)
-                    <h6>Menu Mahasiswa</h6>
-                @elseif (Auth::user()->ID_JENIS_USER == 1)
-                    <h6>Menu User</h6>
-                @endif
+                <h1 class="menu-title">Menu {{ Auth::user()->jenisUser->JENIS_USER }}</h1>
             </span>
         </li>
 
@@ -51,7 +41,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('jenis_user.index') }}">
                     <span class="menu-title">Daftar Role</span>
-                    <i class="mdi mdi mdi-firefox menu-icon"></i>
+                    <i class="mdi mdi-firefox menu-icon"></i>
                 </a>
             </li>
         @endif
@@ -63,7 +53,7 @@
                 </a>
             </li>
         @endif
-        @if (in_array(Auth::user()->ID_JENIS_USER, [1, 2,4]))
+        @if (in_array(Auth::user()->ID_JENIS_USER, [1, 2, 4]))
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('menu.dashboard') }}">
                     <span class="menu-title">Dashboard</span>
@@ -91,7 +81,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('mahasiswa.index') }}">
                     <span class="menu-title">Data Mahasiswa</span>
-                    <i class="mdi mdi mdi-human-male-female menu-icon"></i>
+                    <i class="mdi mdi-human-male-female menu-icon"></i>
                 </a>
             </li>
         @endif
@@ -99,7 +89,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('menu.index') }}">
                     <span class="menu-title">Manajemen Menu</span>
-                    <i class="mdi mdi mdi-security menu-icon"></i>
+                    <i class="mdi mdi-security menu-icon"></i>
                 </a>
             </li>
         @endif
@@ -107,7 +97,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/infogempa">
                     <span class="menu-title">Info Gempa</span>
-                    <i class="mdi mdi mdi-gnome menu-icon"></i>
+                    <i class="mdi mdi-gnome menu-icon"></i>
                 </a>
             </li>
         @endif
@@ -115,26 +105,64 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('postings.index') }}">
                     <span class="menu-title">Posting</span>
-                    <i class="mdi mdi mdi-folder-multiple-image menu-icon"></i>
+                    <i class="mdi mdi-folder-multiple-image menu-icon"></i>
                 </a>
             </li>
         @endif
         @if (in_array(Auth::user()->ID_JENIS_USER, [1, 2, 3, 4]))
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('chats.index') }}">
-                <span class="menu-title">Chat Global</span>
-                <i class="mdi mdi mdi-facebook-messenger menu-icon"></i>
-            </a>
-        </li>
-    @endif
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('chats.index') }}">
+                    <span class="menu-title">Chat Global</span>
+                    <i class="mdi mdi-facebook-messenger menu-icon"></i>
+                </a>
+            </li>
+        @endif
         @if (in_array(Auth::user()->ID_JENIS_USER, [1, 2, 3, 4]))
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('messages.index') }}">
                     <span class="menu-title">Email</span>
-                    <i class="mdi mdi mdi-email menu-icon"></i>
+                    <i class="mdi mdi-email menu-icon"></i>
                 </a>
             </li>
         @endif
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#sidebar-layouts" aria-expanded="false"
+                aria-controls="sidebar-layouts">
+                <span class="menu-title">Transaksi</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-playlist-play menu-icon"></i>
+            </a>
+            <div class="collapse" id="sidebar-layouts" style="">
+                <ul class="nav flex-column sub-menu">
+                    @if (in_array(Auth::user()->ID_JENIS_USER, [1, 2, 3, 4]))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('emiten.index') }}">
+                                <span class="menu-title">Emiten</span>
+                                <i class="mdi mdi-email menu-icon"></i>
+                            </a>
+                        </li>
+                    @endif
+                    @if (in_array(Auth::user()->ID_JENIS_USER, [1, 2, 3, 4]))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('transaksi_harian.index') }}">
+                                <span class="menu-title">Transaksi Harian</span>
+                                <i class="mdi mdi-email menu-icon"></i>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if (in_array(Auth::user()->ID_JENIS_USER, [1, 2, 3, 4]))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('grafik.index') }}">
+                                <span class="menu-title">Grafik Transaksi</span>
+                                <i class="mdi mdi-email menu-icon"></i>
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+        </li>
 
         <li class="nav-item">
             <span class="nav-link">
@@ -153,7 +181,7 @@
 
                     @foreach ($allowedMenus as $menu)
         <li class="nav-item">
-            <a class="nav-link" href="{{url($menu->MENU_LINK)}}">
+            <a class="nav-link" href="{{ url($menu->MENU_LINK) }}">
                 <span class="menu-title">{{ $menu->MENU_NAME }}</span>
                 <i class="{{ $menu->MENU_ICON }} menu-icon"></i>
             </a>

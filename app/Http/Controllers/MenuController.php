@@ -76,9 +76,14 @@ public function store(Request $request)
     {
         $menu = Menu::findOrFail($id);
         $roles = JenisUser::all(); // Mengambil semua roles
+        $routes = collect(Route::getRoutes())->filter(function ($route) {
+            return in_array('GET', $route->methods()); // Hanya menampilkan routes dengan metode GET
+        })->map(function ($route) {
+            return $route->uri();
+        })->toArray();
         $selectedRoles = $menu->roles->pluck('ID_JENIS_USER')->toArray(); // Role yang saat ini terkait dengan menu
     
-        return view('menu.edit', compact('menu', 'roles', 'selectedRoles'));
+        return view('menu.edit', compact('menu', 'roles', 'selectedRoles','routes'));
     }
     
 

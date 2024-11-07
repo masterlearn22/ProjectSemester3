@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\JenisUser;
 use App\Models\Menu;
+use App\Models\JenisUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AksesMenuController extends Controller
 {
@@ -48,7 +49,7 @@ class AksesMenuController extends Controller
             'MENU_ID' => $request->MENU_ID,
             'ID_JENIS_USER' => $request->ID_JENIS_USER,
             'NO_SETTING' => uniqid(), // Generate primary key untuk NO_SETTING
-            'CREATE_BY' => auth()->user()->id, // ID user yang membuat
+            'CREATE_BY' => Auth::user()->ID_USER, // ID user yang membuat
             'CREATE_DATE' => now(), // Tanggal pembuatan
             'DELETE_MARK' => '0', // Menandakan data aktif
         ]);

@@ -4,7 +4,8 @@
 
 <button id="loadAutoGempa">Get Auto Gempa Information</button>
 <button id="loadGempaTerkini">Get Gempa Terkini Information</button>
-
+<div class="row">
+    <div class="col-md-4">
 <h1>Informasi Auto Gempa</h1>
 <table class="table table-dark">
     <tbody id="autoGempaData">
@@ -52,13 +53,16 @@
             <th>Dirasakan</th>
             <td id="dirasakan"></td>
         </tr>
-        <tr>
-            <th>Shakemap</th>
-            <td id="shakemap"></td>
-        </tr>
     </tbody>
 </table>
-
+</div>
+<div class="col-md-8">
+    <h1>Shakemap</h1>
+    <div id="shakemap">
+        <!-- Gambar shakemap akan dimuat di sini -->
+    </div>
+</div>
+</div>
 <h1>Informasi Gempa Terkini</h1>
 <table class="table table-dark" id="gempaTerkiniTable">
     <thead>
@@ -103,6 +107,14 @@
         z-index: 999;
         display: none;
     }
+          /* Atur gambar shakemap agar lebih besar dan responsif */
+    .shakemap-img {
+    max-width: 100%;
+    height: 100%;
+    border: 2px solid #ffffff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
 </style>
 
 <div class="overlay"></div>

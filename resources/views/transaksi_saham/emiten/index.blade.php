@@ -16,36 +16,32 @@
             <div class="content-wrapper">
 
 
-                <h1>Data User</h1>
+                <h1>Data Emiten</h1>
                 <a href="{{ route('admin.create') }}" class="btn btn-primary">Create New User</a>
                 <!-- Tabel Data Warga -->
                 <table id="myTable" class="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Jenis User</th>
-                            <th>Actions</th>
+                            <th>Stock Code</th>
+                            <th>Nama Perusahaan</th>
+                            <th>Shared</th>
+                            <th>Sektor</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $user)
+                        @foreach ($emitens as $emiten)
                             <tr>
-                                <td>{{ $user->ID_USER }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->username }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->jenisUser ? $user->jenisUser->JENIS_USER : 'belom ada' }}</td>
-                                <!-- Tampilkan Jenis User -->
+                                <td>{{ $emiten->STOCK_CODE }}</td>
+                                <td>{{ $emiten->NAMA_PERUSAHAAN }}</td>
+                                <td>{{ $emiten->SHARED }}</td>
+                                <td>{{ $emiten->SEKTOR }}</td>
                                 <td>
-                                    <a href="{{ route('admin.edit', $user->ID_USER) }}" class="btn btn-light">Edit</a>
-                                    <form action="{{ route('admin.destroy', $user->ID_USER) }}" method="POST"
-                                        style="display:inline;">
+                                    <a href="{{ route('emiten.edit', $emiten->STOCK_CODE) }}"  class="btn btn-light" >Edit</a>
+                                    <form action="{{ route('emiten.destroy', $emiten->STOCK_CODE) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-dark">Delete</button>
+                                        <button type="submit" class="btn btn-dark">Hapus</button>
                                     </form>
                                 </td>
                             </tr>

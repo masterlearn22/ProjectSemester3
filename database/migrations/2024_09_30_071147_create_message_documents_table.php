@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('message_documents', function (Blueprint $table) {
             $table->string('no_mdok', 30)->primary();
-            $table->string('file', 200);
+            $table->longText('file');
             $table->string('description', 150);
             $table->string('message_id', 30);
             $table->string('create_by', 30);
@@ -27,9 +27,6 @@ return new class extends Migration
         
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('message_documents');

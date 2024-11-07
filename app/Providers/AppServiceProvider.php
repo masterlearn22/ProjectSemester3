@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Http\Controllers\SidebarController;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,10 +23,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Gunakan View Composer untuk memuat sidebar di semua view
-        View::composer('*', function ($view) {
-            $sidebarController = new SidebarController();
-            $menus = $sidebarController->index();
-            $view->with('menus', $menus);
-        });
+        // View::composer('*', function ($view) {
+        //     $sidebarController = new SidebarController();
+        //     $menus = $sidebarController->index();
+        //     $view->with('menus', $menus);
+        // });
+
+        Paginator::useBootstrap();
     }
 }

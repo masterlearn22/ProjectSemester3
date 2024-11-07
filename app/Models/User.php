@@ -20,7 +20,7 @@ class User extends Authenticatable
 
      protected $table = 'users'; // Nama tabel
      protected $primaryKey = 'ID_USER';
-    protected $fillable = [
+     protected $fillable = [
         'username',
         'name',
         'email',
@@ -29,8 +29,9 @@ class User extends Authenticatable
         'no_hp',
         'wa',
         'pin',
-        'ID_JENIS_USER'
+        'ID_JENIS_USER',
     ];
+        
 
 
     public function jenisUser()
@@ -38,20 +39,10 @@ class User extends Authenticatable
         return $this->belongsTo(JenisUser::class, 'ID_JENIS_USER');
     }
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -64,9 +55,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Posting::class, 'sender', 'ID_USER');
     }
-
-//     public function isAnggota()
-//     {
-//         return $this->role === 'anggota';
-//     }
 }

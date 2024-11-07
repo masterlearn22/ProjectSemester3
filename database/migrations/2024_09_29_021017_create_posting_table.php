@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('posting', function (Blueprint $table) {
-            $table->string('posting_id', 30)->primary();
-            $table->string('sender', 30);
-            $table->text('message_text');
-            $table->string('message_gambar', 200)->nullable();
+            $table->string('posting_id', 30)->primary(); 
+            $table->string('sender', 50);
+            $table->longText('message_text');
+            $table->longText('message_gambar')->nullable();
             $table->string('create_by', 30);
             $table->timestamp('create_date')->useCurrent();
             $table->string('delete_mark', 1)->default('0');

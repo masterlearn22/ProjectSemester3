@@ -25,12 +25,12 @@
         @foreach ($mhs as $datamhs)
         <tr>
             <td> {{ $datamhs->nim }} </td>
-            <td> {{ $datamhs->nama }} </td>
+            <td> {{ $datamhs->name }} </td>
             <td> {{ $datamhs->no_wa }} </td>
             <td> {{ $datamhs->kelas_praktikum }} </td>
             <td>
-                <a href="{{ route('mahasiswa.edit', $datamhs->id) }}" class="btn btn-warning">Edit</a>
-                <form action="{{ route('mahasiswa.destroy', $datamhs->id) }}" method="POST" style="display:inline;">
+                <a href="{{ route('mahasiswa.edit', $datamhs->ID_USER) }}" class="btn btn-warning">Edit</a>
+                <form action="{{ route('mahasiswa.destroy', $datamhs->ID_USER) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Hapus</button>
@@ -38,6 +38,7 @@
             </td>
         </tr>
         @endforeach
+        
     </tbody>
 </table>
 @endsection

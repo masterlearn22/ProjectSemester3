@@ -45,8 +45,11 @@
 
                         <!-- Input file yang tersembunyi -->
                         
-                        <form class="forms-sample" action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+                        <form class="forms-sample" action="{{ route('profile.update', $user->ID_USER)}}" method="POST" enctype="multipart/form-data">
+                            @method('PUT')
                             @csrf
+                             <!-- Debug info -->
+                           {{ $user->ID_USER }} 
                             <input type="file" name="profile_photo" class="form-control" id="profile_photo">
                             <!-- Form input lainnya -->
                             <div class="form-group row">
@@ -108,6 +111,22 @@
             </div>
         </div>
     </div>
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
 
     @include('layout.jspage')
     @include('layout.jsglobal')

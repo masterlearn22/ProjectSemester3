@@ -12,13 +12,13 @@ class KategoriController extends Controller
     public function index()
     {
         $kategoris = Kategori::with('koleksiBukus')->get();
-        return view('kategori_index', compact('kategoris'));
+        return view('buku.kategori.kategori_index', compact('kategoris'));
     }
 
     // Menampilkan form untuk menambah kategori
     public function create()
     {
-        return view('kategori_form');
+        return view('buku.kategori.kategori_form');
     }
 
     // Menyimpan kategori baru
@@ -39,7 +39,7 @@ class KategoriController extends Controller
     public function edit($id)
     {
         $kategori = Kategori::findOrFail($id);
-        return view('kategori_form', compact('kategori'));
+        return view('buku.kategori.kategori_form', compact('kategori'));
     }
 
     // Mengupdate kategori yang ada
@@ -74,8 +74,8 @@ class KategoriController extends Controller
         // Ambil kategori berdasarkan id, termasuk buku-buku di dalamnya
         $kategori = Kategori::with('koleksiBukus')->findOrFail($id);
     
-        // Tampilkan view kategori_buku dengan data kategori dan buku-bukunya
-        return view('kategori_buku', compact('kategori'));
+        // Tampilkan view buku.kategori.kategori_buku dengan data kategori dan buku-bukunya
+        return view('buku.kategori.kategori_buku', compact('kategori'));
     }
     
 

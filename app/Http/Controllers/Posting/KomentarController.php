@@ -1,7 +1,8 @@
 <?php
 
-// App\Http\Controllers\KomentarController.php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Posting;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\Posting;
 use App\Models\PostingKomentar;

@@ -72,7 +72,8 @@
                         </table>
                         
                         <!-- Tombol untuk mengedit profil -->
-                        <a href="{{ route('profile.edit') }}" class="btn btn-primary">Edit Profil</a>
+                        <a href="{{ route('profile.edit', $user->ID_USER) }}" class="btn btn-primary">Edit Profil</a>
+
                     </div>
                 </div>
             </div>

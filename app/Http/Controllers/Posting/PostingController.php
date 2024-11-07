@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Posting;
 
+use App\Http\Controllers\Controller;
 use App\Models\Posting;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -45,7 +46,7 @@ class PostingController extends Controller
         $request->validate([
             'message_text' => 'required',
             'message_gambar' => 'nullable|array|max:10',
-            'message_gambar.*' => 'image|mimes:jpeg,png,jpg,gif',
+            'message_gambar.*' => 'image|mimes:jpeg,png,jpg,gif,webp',
         ]);
 
         if (Auth::check()) {
@@ -70,7 +71,7 @@ class PostingController extends Controller
                     'create_by' => Auth::id(),
                     'create_date' => now(),
                 ]);
-
+                
                 DB::commit();
                 Log::info('Posting berhasil dibuat: ', $posting->toArray());
                 return redirect()->route('postings.index')->with('success', 'Posting berhasil dibuat.');
@@ -113,7 +114,7 @@ class PostingController extends Controller
         $request->validate([
             'message_text' => 'required',
             'message_gambar' => 'nullable|array|max:10',
-            'message_gambar.*' => 'image|mimes:jpeg,png,jpg,gif',
+            'message_gambar.*' => 'image|mimes:jpeg,png,jpg,gif,webp',
         ]);
 
         try {

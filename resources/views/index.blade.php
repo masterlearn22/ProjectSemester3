@@ -5,6 +5,7 @@
     @include('layout.header')
     @include('layout.styleGlobal')
     @include('layout.stylePage')
+    @include('layout.datatable')
 </head>
 
 <body>
@@ -19,7 +20,6 @@
     </div>
     @include('layout.jspage')
     @include('layout.jsglobal')
-
 </body>
 
 </html>
